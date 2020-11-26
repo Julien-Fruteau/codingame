@@ -1,15 +1,19 @@
-from typing import Iterable, Iterator, Optional
+from typing import Iterable, Iterator, Literal, Optional
 
 
 class Vertex(int):
-    def __init__(self, value):
-        super().__init__()
-        self.discovered = False
+    discovered: bool = False
+
+    def __new__(cls, value: int):
+        this = int.__new__(cls, value)
+        return this
 
 
 class Edge:
     # definition for undirected graph
-    def __init__(self, n1: int, n2: int):
+    def __init__(self, n1: Vertex, n2: Vertex):
+        self.a: Vertex
+        self.b: Vertex
         if n1 <= n2:
             self.a = n1
             self.b = n2
@@ -18,27 +22,14 @@ class Edge:
             self.b = n1
 
 
-# class EdgeSet(set):
-#     def __init__(self, edges: Iterable[Edge]=None) -> None:
-#         self.E: set[Edge] = set() if edges is None else set(edges)
-
-#     def __contains__(self, item: Edge) -> bool:
-#         return item in self.E
-
-#     def __len__(self) -> int:
-#         return len(self.E)
-
-#     def __iter__(self) -> Iterator[Edge]:
-#         return iter(self.E)
-
-#     def __getitem__(self, index: int) -> Edge:
-#         return list(self.E)[index]
-
-
 class Graph:
     def __init__(self, edges: Iterable[Edge]=None):
         self.E: list[Edge] = [] if edges is None else list(set(edges))
-        self.V: list[int] = []
+        self.V: list[Vertex] = self.getVertices()
+
+    def getVertices(self) -> list[Vertex]:
+        # return []
+        return [e.a for e in self.E]
 
     def __add__(self, other: Edge):
         self.E.append(other)
@@ -50,12 +41,12 @@ class Graph:
         return self
 
 
-class EdgeManager:
-    def __init__(self):
-        self.edges: list[Edge] = []
+# class EdgeManager:
+#     def __init__(self):
+#         self.edges: list[Edge] = []
 
-    def add(self, edge: Edge) -> None:
-        self.edges.append(edge)
+#     def add(self, edge: Edge) -> None:
+#         self.edges.append(edge)
 
 
 class Tile:
