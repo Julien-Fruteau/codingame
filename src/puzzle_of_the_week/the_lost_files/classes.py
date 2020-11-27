@@ -1,4 +1,4 @@
-from typing import Iterable, Iterator, Literal, Optional
+from typing import Iterable, Iterator, Literal, Optional, Sequence
 
 
 class Vertex(int):
@@ -9,27 +9,37 @@ class Vertex(int):
         return this
 
 
-class Edge:
+class Edge(list):
     # definition for undirected graph
-    def __init__(self, n1: Vertex, n2: Vertex):
-        self.a: Vertex
-        self.b: Vertex
-        if n1 <= n2:
-            self.a = n1
-            self.b = n2
-        else:
-            self.a = n2
-            self.b = n1
+    def __init__(self, v1: Vertex, v2: Vertex):
+        self.vertices = sorted([v1, v2])
+
+    def __contains__(self, v: Vertex) -> bool:
+        return v in self.vertices
+
+    def __len__(self) -> int:
+        return len(self.vertices)
+
+    def __iter__(self) -> Iterator[Vertex]:
+        return iter(self.vertices)
+
+    def __getitem__(self, s: slice) -> Sequence[Vertex]:
+        return self.vertices[s]
+
+    def __getitem__(self, s: int) -> Vertex:
+        return self.vertices[s]
 
 
 class Graph:
     def __init__(self, edges: Iterable[Edge]=None):
-        self.E: list[Edge] = [] if edges is None else list(set(edges))
-        self.V: list[Vertex] = self.getVertices()
+        self.E: list[Edge] = list(edges) if edges else []
 
-    def getVertices(self) -> list[Vertex]:
-        # return []
-        return [e.a for e in self.E]
+    @property
+    def V(self) -> list[Vertex]:
+        res = []
+        for e in self.E:
+            res += [*e]
+        return sorted(set(res))
 
     def __add__(self, other: Edge):
         self.E.append(other)
