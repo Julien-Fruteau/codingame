@@ -1,4 +1,4 @@
-from typing import Iterable, Iterator, Literal, Optional, Sequence
+from typing import Iterable, Iterator, Literal, Optional, Sequence, Union
 
 
 class Vertex(int):
@@ -28,6 +28,17 @@ class Edge(list):
 
     def __getitem__(self, s: int) -> Vertex:
         return self.vertices[s]
+
+    def remove(self, value: Vertex) -> None:
+        self.vertices.remove(value)
+
+    def pop(self, index: int=-1) -> Vertex:
+        return self.vertices[index]
+
+    def getAdj(self, v: Vertex) -> Union[Vertex, None]:
+        if v not in self.vertices:
+            return None
+        return self.vertices[0] if v == self.vertices[1] else self.vertices[1]
 
 
 class Tile:
@@ -69,10 +80,10 @@ class Graph:
             self.E.append(other)
         return self
 
-
-# class EdgeManager:
-#     def __init__(self):
-#         self.edges: list[Edge] = []
-
-#     def add(self, edge: Edge) -> None:
-#         self.edges.append(edge)
+    def Adj(self, v: Vertex) -> list[Vertex]:
+        res: list[Vertex] = []
+        for edge in self.E:
+            adj = edge.getAdj(v)
+            if adj is not None:
+                res.append(adj)
+        return sorted(res)

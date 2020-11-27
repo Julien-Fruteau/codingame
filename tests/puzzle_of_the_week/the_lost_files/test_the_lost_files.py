@@ -17,6 +17,12 @@ def test_Edge():
     assert e2[0] == 2 and e2[1] == 2
     assert e3[0] == 2 and e3[1] == 3
 
+def test_Edge_getAdj():
+    e1 = Edge(Vertex(1), Vertex(2))
+    assert e1.getAdj(Vertex(1)) == 2
+    assert e1.getAdj(Vertex(2)) == 1
+    assert e1.getAdj(Vertex(3)) is None
+
 def test_set():
     s = set([(1, 2), (3, 2), (2, 1), (1, 2)])
     s |= set([(2, 3)])
@@ -65,3 +71,14 @@ def test_GraphV2():
     ])
     g.V[0].discovered = True
     assert g.V[0].discovered == True and g.V[1].discovered == False and g.V[2].discovered == False
+
+def test_Adj1():
+    g = Graph([
+        Edge(Vertex(1), Vertex(2)),
+        Edge(Vertex(3), Vertex(2)),
+        Edge(Vertex(3), Vertex(5)),
+        Edge(Vertex(4), Vertex(3))
+    ])
+    assert g.Adj(Vertex(3)) == [2, 4, 5]
+    assert g.Adj(Vertex(1)) == [2]
+    assert g.Adj(Vertex(2)) == [1, 3]
