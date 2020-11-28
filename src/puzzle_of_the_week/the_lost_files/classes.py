@@ -87,3 +87,21 @@ class Graph:
             if adj is not None:
                 res.append(adj)
         return sorted(res)
+
+    def triggerDFS(self):
+        pass
+    # > init w/ 1st item...
+    # root = self.V[0]
+    # queue = [root]
+    # 
+    #
+    # while len(queue) > 0:
+    #   DFS(queue.pop())
+    #   # inc Cont
+    #   
+    # def DFS(next: Vertex)
+    #   next.discovered = True
+    #   for adj in self.Adj(nexr):
+    #       if adj.discovered == False
+    #           queue.append(adj)
+    

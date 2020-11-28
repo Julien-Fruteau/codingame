@@ -82,3 +82,11 @@ def test_Adj1():
     assert g.Adj(Vertex(3)) == [2, 4, 5]
     assert g.Adj(Vertex(1)) == [2]
     assert g.Adj(Vertex(2)) == [1, 3]
+
+
+def test_V_VertexId():
+    v0 = Vertex(1)
+    v1 = Vertex(2)
+    g = Graph([Edge(v0, v1)])
+    assert g.V[0] is v0
+    assert g.V[1] is v1
