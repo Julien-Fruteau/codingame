@@ -1,0 +1,7 @@
+bin/*
+obj/*
+test/codingame-there-is-no-spoon-cs.test/bin/*
+test/codingame-there-is-no-spoon-cs.test/obj/*
+src/codingame-there-is-no-spoon-cs/bin/*
+src/codingame-there-is-no-spoon-cs/obj/*
+.vscode
